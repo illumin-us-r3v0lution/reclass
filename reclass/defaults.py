@@ -24,5 +24,20 @@ CONFIG_FILE_SEARCH_PATH = [os.getcwd(),
                           ]
 CONFIG_FILE_NAME = RECLASS_NAME + '-config.yml'
 
+DEFAULT_CONFIG_LIST = [
+    os.path.join(d, CONFIG_FILE_NAME) for d in CONFIG_FILE_SEARCH_PATH
+]
+
+DEFAULT_CONFIG = {
+    'storage_type': OPT_STORAGE_TYPE,
+    'inventory_base_uri': OPT_INVENTORY_BASE_URI,
+    'nodes_uri': OPT_NODES_URI,
+    'classes_uri': OPT_CLASSES_URI,
+    'pretty_print': OPT_PRETTY_PRINT,
+    'output': OPT_OUTPUT,
+    'debug': False,
+}
+
+
 PARAMETER_INTERPOLATION_SENTINELS = ('${', '}')
 PARAMETER_INTERPOLATION_DELIMITER = ':'
