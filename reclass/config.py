@@ -19,7 +19,7 @@ from config_base import ConfigBase
 logger = logging.getLogger(RECLASS_NAME)
 
 RECLASS_OPTS_TO_EXTRACT = DEFAULT_CONFIG.keys()
-RECLASS_OPTS_TO_EXTRACT.append(['config', 'nodename',)
+RECLASS_OPTS_TO_EXTRACT.append('nodename')
 
 
 class Config(ConfigBase):

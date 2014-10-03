@@ -10,9 +10,9 @@
 import sys, os, posix
 import logging
 
-from reclass import get_storage, output
+from reclass import output
 from reclass.core import Core
-from reclass.config import find_and_read_configfile, get_options
+from reclass.config import get_options, Config
 from reclass.errors import ReclassException
 from reclass.defaults import *
 from reclass.constants import MODE_NODEINFO
@@ -22,22 +22,17 @@ from reclass.version import *
 
 def main():
     try:
-        defaults = {'pretty_print' : OPT_PRETTY_PRINT,
-                    'output' : OPT_OUTPUT
-                   }
-        defaults.update(find_and_read_configfile())
-        options = get_options(RECLASS_NAME, VERSION, DESCRIPTION,
-                              defaults=defaults)
+        # option parsing
+        options = get_options(RECLASS_NAME, VERSION, DESCRIPTION)
+        logger.debug('parsed options: %s' % options)
+        # config parsing
+        config = Config(opts=options)
+        # instantiate reclass core, loads storage/etc from config
+        reclass = Core(config)
 
-        logger.debug('defaults: %s' % options)
-        storage = get_storage(options.storage_type, options.nodes_uri,
-                              options.classes_uri, default_environment='base')
-        class_mappings = defaults.get('class_mappings')
-        reclass = Core(storage, class_mappings)
-
+        # are we looking up a specific node?
         if options.mode == MODE_NODEINFO:
             data = reclass.nodeinfo(options.nodename)
-
         else:
             data = reclass.inventory()
 
@@ -48,5 +43,6 @@ def main():
 
     sys.exit(posix.EX_OK)
 
+#       import pdb; pdb.set_trace()
 if __name__ == '__main__':
     main()
