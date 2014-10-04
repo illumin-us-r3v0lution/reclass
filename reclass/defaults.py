@@ -36,6 +36,7 @@ DEFAULT_CONFIG = {
     'pretty_print': OPT_PRETTY_PRINT,
     'output': OPT_OUTPUT,
     'debug': False,
+    'class_mappings': None,
 }
 
 
