@@ -84,11 +84,12 @@ def _get_keys_from_env(keys=[]):
 def _merge(a, b):
     '''
     merge the contents of dictionary ``b`` into dictionary ``a``, using reclass'
-    sensible form of deep-dictionary merging
+    sensible form of deep-dictionary merging and interpolation.
     '''
     m = Parameters(a)
     m.merge(b)
-    return m
+    m.interpolate()
+    return m.as_dict()
 
 
 
@@ -242,6 +243,7 @@ class ConfigBase(UserDict.UserDict):
         self.logger.debug('merging %s into %s' % (data, self.data))
         m = Parameters(self.data)
         m.merge(data)
+        m.interpolate()
         self.data = m.as_dict()
 
 
