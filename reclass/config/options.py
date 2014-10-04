@@ -1,39 +1,7 @@
-#
-# -*- coding: utf-8 -*-
-#
-# This file is part of reclass (http://github.com/madduck/reclass)
-#
-# Copyright © 2007–14 martin f. krafft <madduck@madduck.net>
-# Released under the terms of the Artistic Licence 2.0
-#
-
 import yaml, os, optparse, posix, sys
-import logging
 
-import errors
-from defaults import *
-from constants import MODE_NODEINFO, MODE_INVENTORY
-from config_base import ConfigBase
-
-
-logger = logging.getLogger(RECLASS_NAME)
-
-RECLASS_OPTS_TO_EXTRACT = DEFAULT_CONFIG.keys()
-RECLASS_OPTS_TO_EXTRACT.append('nodename')
-
-
-class Config(ConfigBase):
-    '''
-    Cater to the needs of Reclass Core, config that is internal to Reclass.
-    Serve as a collection point for processing and compiling configuration
-    from multiple sources, and separate internal Configuration from user
-    Options and environment variables.
-
-    '''
-    _filelist = DEFAULT_CONFIG_LIST 
-    _defaults = DEFAULT_CONFIG
-    _opts_list = RECLASS_OPTS_TO_EXTRACT
-    logger = logger
+from reclass.defaults import *
+from reclass.constants import MODE_NODEINFO, MODE_INVENTORY
 
 
 def make_db_options_group(parser, defaults={}):
@@ -208,14 +176,3 @@ def get_options(name, version, description,
 
     return options
 
-
-def find_and_read_configfile(filename=CONFIG_FILE_NAME,
-                             dirs=CONFIG_FILE_SEARCH_PATH):
-    for d in dirs:
-        f = os.path.join(d, filename)
-        if os.access(f, os.R_OK):
-            logger.debug('Using config file: {0}'.format(f))
-            return yaml.safe_load(file(f))
-        elif os.path.isfile(f):
-            raise PermissionsError('cannot read %s' % f)
-    return {}
