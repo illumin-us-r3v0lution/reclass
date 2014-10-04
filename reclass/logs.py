@@ -9,18 +9,10 @@
 
 import logging.config
 
-from reclass.config import get_options
 from reclass.defaults import RECLASS_NAME
-from reclass.version import VERSION, DESCRIPTION
 
 
 RECLASS_LOGGER = RECLASS_NAME
-
-options = get_options(RECLASS_NAME, VERSION, DESCRIPTION)
-LOG_LEVEL = 'ERROR'
-if options.debug:
-    LOG_LEVEL = 'DEBUG'
-
 
 LOGGING_CONFIG = {
     'version': 1,
@@ -39,12 +31,25 @@ LOGGING_CONFIG = {
     'loggers': {
         RECLASS_LOGGER: {
             'handlers': ['stderr'],
-            'level': LOG_LEVEL,
+            'level': 'ERROR',
         }
     }
 }
 
 
-logging.config.dictConfig(LOGGING_CONFIG)
-logger = logging.getLogger(RECLASS_LOGGER)
-logger.debug('Enabling debug log messages')
+def init_logger(debug=False, config={}):
+    '''
+    Initialize and return an instance of ``logging.logger``, using ``config``
+    as a dictionary config, if provided, else use the internal default
+    ``LOGGING_CONFIG`` for Reclass. If ``debug`` is ``True``, update the log
+    level to ``DEBUG``
+
+    '''
+    if not config:
+        config = LOGGING_CONFIG
+    logging.config.dictConfig(config)
+    logger = logging.getLogger(RECLASS_LOGGER)
+    if debug:
+        logger.setLevel(logging.DEBUG)
+    logger.debug('Enabling debug log messages')
+    return logger

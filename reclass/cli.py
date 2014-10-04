@@ -15,7 +15,7 @@ from reclass.config import get_options, Config
 from reclass.errors import ReclassException
 from reclass.defaults import *
 from reclass.constants import MODE_NODEINFO
-from reclass.logs import logger
+from reclass.logs import init_logger
 from reclass.version import *
 
 
@@ -23,6 +23,7 @@ def main():
     try:
         # option parsing
         options = get_options(RECLASS_NAME, VERSION, DESCRIPTION)
+        logger = init_logger(debug=options.debug)
         logger.debug('parsed options: %s' % options)
         # config parsing
         config = Config(opts=options)
