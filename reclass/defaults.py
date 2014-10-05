@@ -29,6 +29,7 @@ DEFAULT_CONFIG_LIST = [
 ]
 
 DEFAULT_YAMLFS_STORAGE_CONFIG = {
+    'module': 'reclass.storage.yaml_fs',
     'nodes_uri': os.path.join(OPT_INVENTORY_BASE_URI, 'nodes'),
     'classes_uri': os.path.join(OPT_INVENTORY_BASE_URI, 'classes'),
 }
