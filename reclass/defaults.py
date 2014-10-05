@@ -28,8 +28,14 @@ DEFAULT_CONFIG_LIST = [
     os.path.join(d, CONFIG_FILE_NAME) for d in CONFIG_FILE_SEARCH_PATH
 ]
 
+DEFAULT_YAMLFS_STORAGE_CONFIG = {
+    'nodes_uri': os.path.join(OPT_INVENTORY_BASE_URI, 'nodes'),
+    'classes_uri': os.path.join(OPT_INVENTORY_BASE_URI, 'classes'),
+}
+
 DEFAULT_CONFIG = {
     'storage_type': OPT_STORAGE_TYPE,
+    OPT_STORAGE_TYPE: DEFAULT_YAMLFS_STORAGE_CONFIG,
     'inventory_base_uri': OPT_INVENTORY_BASE_URI,
     'nodes_uri': OPT_NODES_URI,
     'classes_uri': OPT_CLASSES_URI,
